@@ -17,7 +17,8 @@ def parse(puzzle_input):
     lines = [x.split() for x in puzzle_input.split('\n')]
     return lines
 
-CARD_RANK = "23456789TJQKA" # ace is always high
+CARD_RANK  = "23456789TJQKA" # ace is always high
+CARD_RANK2 = "J23456789TQKA" # ace is always high
 
 def rankHands(hand):
     cards = defaultdict(lambda: 0)
@@ -38,13 +39,10 @@ def rankHands(hand):
     elif len(cards) == 4: # one pair
         return 50
     else:
-        maxRank = -1
-        for c in cards:
-            maxRank = max(maxRank, CARD_RANK.index(c))
-        return maxRank
+        return 40
 
 def cmpCardsInOrder(hand1, hand2):
-    print("comparing cards in order", hand1, " and ", hand2) 
+    #print("comparing cards in order", hand1, " and ", hand2) 
     for i in range(0, len(hand1)):
         rank1 = CARD_RANK.index(hand1[i])
         rank2 = CARD_RANK.index(hand2[i])
@@ -54,7 +52,7 @@ def cmpCardsInOrder(hand1, hand2):
 
   
 def mycmp(a, b): 
-    print("comparing ", a, " and ", b) 
+    #print("comparing ", a, " and ", b) 
     rank1 = rankHands(a[0])
     rank2 = rankHands(b[0])
     if rank1 != rank2: 
@@ -66,11 +64,12 @@ def mycmp(a, b):
 def part1(data):
     """Solve part 1."""
     s = sorted(data, key=functools.cmp_to_key(mycmp))
-    print(s)
+    print(*s, sep='\n')
     result = 0
     for i, x in enumerate(s):
         result += (i + 1) * int(x[1])
     # 250856581 is too low
+    # 250760618 is too low
     return result
 
 
